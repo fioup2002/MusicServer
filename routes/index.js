@@ -1,12 +1,36 @@
-var express = require('express');
+var express = require("express");
+var google = require("../google/main.js");
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('/index.html');
+router.get("/", function (req, res, next) {
+  res.redirect("/index.html");
 });
-router.get('/getUserFileList', function(req, res, next) {
-  res.send("ok");
+router.get("/GetFileList", function (req, res, next) {
+  google.GetFileList(function (type, str) {
+    SendResponse(type, str, res);
+  });
+});
+router.get("/SetCode", function (req, res, next) {
+  google.SetCode(req.query.code, function (type, str) {
+    SendResponse(type, str, res);
+  });
+});
+router.get("/IsNeedAccess", function (req, res, next) {
+  google.IsNeedAccess(function (type, str) {
+    SendResponse(type, str, res);
+  });
+});
+router.get("/GetAccessURL", function (req, res, next) {
+  google.GetAccessURL(function (type, str) {
+    SendResponse(type, str, res);
+  });
 });
 
 module.exports = router;
+
+function SendResponse(type, str, res) {
+  var obj = new Object();
+  obj.cmd = type;
+  obj.content = str;
+  res.send(JSON.stringify(obj));
+}
