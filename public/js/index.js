@@ -1,9 +1,11 @@
 var vueThis;
-var url = 'https://docs.google.com/uc?export=download&id=';
+var url = "tmp/";
 new Vue({
   el: "#main",
   data: {
-    fileList:[]
+    fileList: [],
+    textStatus: "",
+    isDownloading: false,
   },
   created: function () {},
   methods: {
@@ -73,11 +75,10 @@ new Vue({
           var code = this.GetQueryString().code;
           if (code != undefined && code.length != 0) {
             vueThis.SetCode(code);
-            setTimeout(function(){
+            setTimeout(function () {
               window.location.replace(window.location.href.split("?")[0]);
-            },1000);
-          }
-          else{
+            }, 1000);
+          } else {
             vueThis.GetAccessURL();
           }
         }
@@ -87,14 +88,51 @@ new Vue({
         if (content == "Get token failed") {
           vueThis.IsNeedAccess();
         }
-      }else if(cmd == "GetFileList"){
-        vueThis.fileList = content;
+      } else if (cmd == "GetFileList") {
+        if (content.isNeedDownload != undefined && content.isNeedDownload) {
+          vueThis.textStatus = "Downloading";
+          vueThis.isDownloading = true;
+          vueThis.CheckDownload();
+        } else {
+          vueThis.fileList = content;
+          vueThis.textStatus = "Download Done";
+        }
       }
-    }
-    ,Play(id){
-      $("#"+id +" source").attr('src', url+id);
-      $("#"+id)[0].load();
-    }
+      else if(cmd == "GetDownloadStatus"){
+        var total = content.total;
+        var now = content.now;
+        if (now == 0){
+          vueThis.isDownloading = false;
+        }
+        else{
+          vueThis.textStatus = "Downloading: " + now + "/" + total;
+        }
+      }
+    },
+    Play(file) {
+      $("#" + file.id + " source").attr("src", url + file.id + "." +file.name.split(".")[file.name.split(".").length - 1]);
+      $("#" + file.id)[0].load();
+    },
+    GetDownloadStatus() {
+      $.ajax({
+        type: "GET",
+        url: "/GetDownloadStatus",
+        success: function (res) {
+          vueThis.ParseJSON(res);
+        },
+      });
+    },
+    CheckDownload() {
+      var interval = setInterval(function () {
+        if (vueThis.isDownloading) {
+          vueThis.GetDownloadStatus();
+        } else {
+          clearInterval(interval);
+          vueThis.textStatus = "Download Done";
+          vueThis.GetFileList();
+        }
+      }, 5000);
+    },
   },
   mounted: function () {
     vueThis = this;

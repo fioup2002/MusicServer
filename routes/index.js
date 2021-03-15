@@ -25,6 +25,11 @@ router.get("/GetAccessURL", function (req, res, next) {
     SendResponse(type, str, res);
   });
 });
+router.get("/GetDownloadStatus", function (req, res, next) {
+  google.GetDownloadStatus(function (type, str) {
+    SendResponse(type, str, res);
+  });
+});
 router.get("/favicon.ico", function (req, res, next) {
   res.send("");
 });

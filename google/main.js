@@ -1,13 +1,17 @@
 const fs = require("fs");
 const readline = require("readline");
 const { google } = require("googleapis");
-const SCOPES = ["https://www.googleapis.com/auth/drive.metadata.readonly"];
+const SCOPES = ["https://www.googleapis.com/auth/drive"];
 const TOKEN_PATH = "./google/token.json";
 const CREDENTIAL_PATH = "./google/credentials.json";
+const FILE_PATH = "./public/tmp";
 
 var oAuth2Client;
 var token;
 var isNeedAccess = true;
+var driveFiles = [];
+var existsArray = [];
+var isDownloading = false;
 
 module.exports = {
   IsNeedAccess: function (callback) {
@@ -41,9 +45,16 @@ module.exports = {
   },
   GetFileList: function (callback) {
     ListFiles(function (files) {
-      callback("GetFileList", JSON.stringify(files));
+      driveFiles = files;
+      CheckFile(callback);
     });
   },
+  GetDownloadStatus: function(callback){
+    var obj = new Object();
+    obj.total = driveFiles.length;
+    obj.now = existsArray.length;
+    callback("GetDownloadStatus", JSON.stringify(obj));
+  }
 };
 function InitSetting() {
   if (fs.existsSync(CREDENTIAL_PATH)) {
@@ -59,6 +70,9 @@ function InitSetting() {
     }
   } else {
     console.log("No credential file");
+  }
+  if (!fs.existsSync(FILE_PATH)){
+    fs.mkdirSync(FILE_PATH);
   }
 }
 function ListFiles(callback) {
@@ -76,5 +90,50 @@ function ListFiles(callback) {
       callback(res.data.files);
     }
   );
+}
+function CheckFile(callback) {
+  for (var i = 0; i < driveFiles.length; i++) {
+    var id = driveFiles[i].id;
+    var name = driveFiles[i].name;
+    var path = FILE_PATH + "/" + id + "." + name.split(".")[name.split(".").length - 1];
+    if (!fs.existsSync(path)) {
+      existsArray.push(driveFiles[i]);
+    }
+  }
+  DownloadFile(callback);
+}
+function DownloadFile(callback) {
+  isDownloading = true;
+  if (existsArray.length != 0) {
+    var obj = new Object();
+    obj.isNeedDownload = isDownloading;
+    if (callback != null) {
+      callback("GetFileList", JSON.stringify(obj));
+    }
+    var id = existsArray[0].id;
+    var name = existsArray[0].name;
+    var path = FILE_PATH + "/" + id + "." + name.split(".")[name.split(".").length - 1];
+    const drive = google.drive({
+      version: "v3",
+      auth: oAuth2Client,
+    });
+    var dest = fs.createWriteStream(path);
+    drive.files.get({ fileId: id, alt: "media" }, { responseType: "stream" }, function (err, res) {
+      res.data
+        .on("end", () => {
+          existsArray.shift();
+          DownloadFile();
+        })
+        .on("error", (err) => {
+          console.log("Error", err);
+        })
+        .pipe(dest);
+    });
+  } else {
+    isDownloading = false;
+    if (callback != null) {
+      callback("GetFileList", JSON.stringify(driveFiles));
+    }
+  }
 }
 InitSetting();
