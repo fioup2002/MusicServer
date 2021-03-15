@@ -25,6 +25,10 @@ router.get("/GetAccessURL", function (req, res, next) {
     SendResponse(type, str, res);
   });
 });
+router.get("/favicon.ico", function (req, res, next) {
+  res.send("");
+});
+ 
 
 module.exports = router;
 

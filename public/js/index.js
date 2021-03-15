@@ -1,4 +1,5 @@
 var vueThis;
+var url = 'https://docs.google.com/uc?export=download&id=';
 new Vue({
   el: "#main",
   data: {
@@ -87,9 +88,13 @@ new Vue({
           vueThis.IsNeedAccess();
         }
       }else if(cmd == "GetFileList"){
-        fileList = content;
+        vueThis.fileList = content;
       }
-    },
+    }
+    ,Play(id){
+      $("#"+id +" source").attr('src', url+id);
+      $("#"+id)[0].load();
+    }
   },
   mounted: function () {
     vueThis = this;
