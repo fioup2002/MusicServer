@@ -7,8 +7,10 @@
   </head>
   <body>
     <div id="main">
-      <div class="button" v-on:click="GetFileList()" v-html="GenerateText('GET')"></div>
-      <div class="text" v-html="GenerateText(textStatus)"></div>
+      <div class="header">
+        <div class="button" v-on:click="GetFileList()" v-html="GenerateText('GET')"></div>
+        <div class="text" v-html="GenerateText(textStatus)"></div>
+      </div>
       <div class="list">
         <div class="file" v-for="file in fileList">
           <div class="name" v-html="GenerateText(file.name)"></div>
