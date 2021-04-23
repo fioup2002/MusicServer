@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./css/style.min.css" />
+    <link rel="stylesheet" href="./css/token.min.css" />
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <div class="input_block">
+        <div class="input_block_label" v-html="GenerateText('字串:')"></div>
+        <input type="text" class="input_block_text" v-model="textAESValue"></input>
+        <button class="input_block_btn" v-on:click="SendAESRequest();">送出</button>
+      </div>
+      <div class="input_block">
+        <div class="input_block_label" v-html="GenerateText('AES:')"></div>
+        <input type="text" class="input_block_text" v-model="returnAESValue"></input>
+      </div>
+      <div class="input_block">
+        <div class="input_block_label" v-html="GenerateText('Platform:')"></div>
+        <input type="text" class="input_block_text" v-model="platform"></input>
+      </div>
+      <div class="input_block">
+        <div class="input_block_label" v-html="GenerateText('Type:')"></div>
+        <input type="text" class="input_block_text" v-model="type"></input>
+      </div>
+      <div class="input_block">
+        <div class="input_block_label" v-html="GenerateText('Pass:')"></div>
+        <input type="text" class="input_block_text" v-model="pass"></input>
+      </div>  
+      <div class="input_block">
+        <div class="input_block_label" v-html="GenerateText('Login Prev:')"></div>
+        <input type="text" class="input_block_text" v-model="login_prev"></input>
+      </div>
+      <div class="input_block">
+        <div class="input_block_label" v-html="GenerateText('Sign:')"></div>
+        <input type="text" class="input_block_text" v-model="sign"></input>
+      </div>
+      <div class="input_block">
+        <div class="input_block_label" v-html="GenerateText('Token:')"></div>
+        <input type="text" class="input_block_text" v-model="token"></input>
+      </div>
+    </div>
+    <script src="./js/token.js"></script>
+  </body>
+</html>

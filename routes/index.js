@@ -1,12 +1,15 @@
 var express = require("express");
 var google = require("../google/main.js");
 var router = express.Router();
-var jsdom  = require("jsdom");
+var jsdom = require("jsdom");
 var phantom = require("phantom");
+var crypto = require("crypto");
+var md5 = require("md5");
+var request = require("request");
 
 var gHtml = "";
 router.get("/", function (req, res, next) {
-  res.redirect("/index.html");
+  res.redirect("./token.html");
 });
 router.get("/GetFileList", function (req, res, next) {
   google.GetFileList(function (type, str) {
@@ -39,7 +42,22 @@ router.get("/favicon.ico", function (req, res, next) {
 router.get("/getHtml", function (req, res, next) {
   res.send("");
 });
-
+router.get("/GetToken", function (req, res, next) {
+  res.send(encrypt(req.query.value, "GTS2GWAPP1234578"));
+});
+router.get("/GetMd5", function (req, res, next) {
+  res.send(md5(req.query.value));
+});
+router.get("/GetTokenFromURL", function (req, res, next) {
+  var obj = JSON.parse(req.query.value);
+  var param = "http://192.168.75.48:5001/tools/?";
+  for (var key in obj) {
+    param += key + "=" + obj[key] + "&";
+  }
+  request(param, function (error, response, body) {
+    res.send(body);
+  });
+});
 module.exports = router;
 
 function SendResponse(type, str, res) {
@@ -55,8 +73,8 @@ function GetHtml() {
       page.open("https://www.gffx188.com/news?type=tips").then(function (status) {
         page.property("content").then(function (content) {
           const { window } = new jsdom.JSDOM(content);
-          var $ = require('jquery')(window);
-          for (var i = 0; i < $(".content-module--item--1Jgbx").length; i++){
+          var $ = require("jquery")(window);
+          for (var i = 0; i < $(".content-module--item--1Jgbx").length; i++) {
             console.log($($(".content-module--item--1Jgbx")[i]).children(".content-module--itemMain--wd5XD").html());
           }
           page.close().then(function () {
@@ -68,4 +86,33 @@ function GetHtml() {
   });
 }
 
-GetHtml();
+// GetHtml();
+
+// ECB pkcs5padding 128位 GTS2GWAPP1234578 0 hex gb2312
+
+function encrypt(data, key, iv) {
+  iv = iv || "";
+  var clearEncoding = "gb2312";
+  var cipherEncoding = "hex";
+  var cipherChunks = [];
+  var cipher = crypto.createCipheriv("AES-128-ECB", key, iv);
+  cipher.setAutoPadding(true);
+  cipherChunks.push(cipher.update(data, clearEncoding, cipherEncoding));
+  cipherChunks.push(cipher.final(cipherEncoding));
+  return cipherChunks.join("");
+}
+//解密
+// function decrypt (data, key, iv) {
+//   if (!data) {
+//       return "";
+//   }
+//   iv = iv || "";
+//   var clearEncoding = 'utf8';
+//   var cipherEncoding = 'base64';
+//   var cipherChunks = [];
+//   var decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
+//   decipher.setAutoPadding(true);
+//   cipherChunks.push(decipher.update(data, cipherEncoding, clearEncoding));
+//   cipherChunks.push(decipher.final(clearEncoding));
+//   return cipherChunks.join('');
+// }
