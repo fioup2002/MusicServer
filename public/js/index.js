@@ -17,6 +17,7 @@ new Vue({
   created: function () {},
   methods: {
     GenerateText(text) {
+      
       var res = "";
       res += "<table class='text_block'>";
       res += "<td class='text_block_td'>";
