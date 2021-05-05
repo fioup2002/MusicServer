@@ -1,8 +1,5 @@
 var vueThis;
 var url = "tmp/";
-
-
-
 new Vue({
   el: "#main",
   data: {
