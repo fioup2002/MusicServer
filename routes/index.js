@@ -8,6 +8,9 @@ var md5 = require("md5");
 var request = require("request");
 
 var gHtml = "";
+router.get("/test302", function (req, res, next) {
+  res.redirect("./token.html");
+});
 router.get("/", function (req, res, next) {
   res.redirect("./token.html");
 });
