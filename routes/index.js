@@ -8,6 +8,8 @@ var md5 = require("md5");
 var request = require("request");
 var path = require("path");
 
+
+
 var gHtml = "";
 router.get("/test302", function (req, res, next) {
   res.redirect("./token.html");
@@ -64,7 +66,6 @@ router.get("/GetTokenFromURL", function (req, res, next) {
     res.send(body);
   });
 });
-
 /*only slash*/
 // router.get('/*', function(req, res, next) {
 //   // res.sendFile(path.resolve('./public/index.html'));
