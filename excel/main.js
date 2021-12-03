@@ -2677,7 +2677,7 @@ const Excel = require("exceljs");
 
 // Create workbook & add worksheet
 const workbook = new Excel.Workbook();
-const worksheet = workbook.addWorksheet("ExampleSheet");
+const worksheet = workbook.addWorksheet("ExampleSheet")
 console.log(data.productTable[0])
 // add column headers
 worksheet.columns = [
