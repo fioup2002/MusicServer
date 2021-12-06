@@ -47,3 +47,4 @@ $RECYCLE.BIN/
 node_modules
 public/tmp
 excel/前端用表格.xlsx
+excel/result.json
