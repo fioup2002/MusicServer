@@ -57,8 +57,8 @@ router.get("/GetMd5", function (req, res, next) {
 router.get("/GetTokenFromURL", function (req, res, next) {
   var obj = JSON.parse(req.query.value);
   // var param = "https://openapi.hxfx.com/tools/?";
-  var param = "https://openapi.gffx168.com/tools/?";
-  // var param = "https://openapi.hx9999.com/tools/?";
+  // var param = "https://openapi.gffx168.com/tools/?";
+  var param = "https://openapi.huaxtgjs.com/tools/?";
   for (var key in obj) {
     param += key + "=" + obj[key] + "&";
   }
@@ -72,7 +72,7 @@ router.get("/GetTokenFromURL", function (req, res, next) {
 //   // res.sendFile(path.resolve('./public/index.html'));
 // });
 
-
+// 81e26003d7aa18c781fcfacbeddf7bc8
 
 
 
