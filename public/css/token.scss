@@ -16,9 +16,10 @@ html{
           display: flex;
           justify-content: center;
           align-items: center;
+          flex-shrink: 0;
         }
         .text{
-          width: 400px;
+          width: 450px;
           height: 100%;
           margin-left: 10px;
           font-size: 20px;
@@ -34,7 +35,7 @@ html{
         }
         &:nth-of-type(7){
           .text{
-            width: 800px;
+            width: 100%;
           }
         }
         &:nth-of-type(9){
