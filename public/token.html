@@ -8,38 +8,46 @@
   </head>
   <body>
     <div id="main">
-      <div class="input_block">
-        <div class="input_block_label" v-html="GenerateText('字串:')"></div>
-        <input type="text" class="input_block_text" v-model="textAESValue"></input>
-        <button class="input_block_btn" v-on:click="SendAESRequest();">送出</button>
+      <div class="block">
+        <div class="label">帳號</div>
+        <input type="text" class="text" v-model="textAESValue"></input>
+        <button class="btn" v-on:click="SendAESRequest();">送出</button>
       </div>
-      <div class="input_block">
-        <div class="input_block_label" v-html="GenerateText('AES:')"></div>
-        <input type="text" class="input_block_text" v-model="returnAESValue"></input>
+      <div class="block">
+        <div class="label">AES:</div>
+        <input type="text" class="text" v-model="returnAESValue"></input>
       </div>
-      <div class="input_block">
-        <div class="input_block_label" v-html="GenerateText('Platform:')"></div>
-        <input type="text" class="input_block_text" v-model="platform"></input>
+      <div class="block">
+        <div class="label">Platform</div>
+        <input type="text" class="text" v-model="platform"></input>
       </div>
-      <div class="input_block">
-        <div class="input_block_label" v-html="GenerateText('Type:')"></div>
-        <input type="text" class="input_block_text" v-model="type"></input>
+      <div class="block">
+        <div class="label">Type</div>
+        <input type="text" class="text" v-model="type"></input>
       </div>
-      <div class="input_block">
-        <div class="input_block_label" v-html="GenerateText('Pass:')"></div>
-        <input type="text" class="input_block_text" v-model="pass"></input>
-      </div>  
-      <div class="input_block">
-        <div class="input_block_label" v-html="GenerateText('Login Prev:')"></div>
-        <input type="text" class="input_block_text" v-model="login_prev"></input>
+      <div class="block">
+        <div class="label">Password:</div>
+        <select class="text" v-model="pass">
+          <option :value="text" v-for="text in passList" v-html="text"></option>
+        </select>
       </div>
-      <div class="input_block">
-        <div class="input_block_label" v-html="GenerateText('Sign:')"></div>
-        <input type="text" class="input_block_text" v-model="sign"></input>
+      <div class="block">
+        <div class="label">URL:</div>
+        <select class="text" v-model="url">
+          <option :value="text" v-for="text in urlList" v-html="text"></option>
+        </select>
       </div>
-      <div class="input_block">
-        <div class="input_block_label" v-html="GenerateText('Token:')"></div>
-        <input type="text" class="input_block_text" v-model="token"></input>
+      <div class="block">
+        <div class="label">Sign Prev:</div>
+        <input type="text" class="text" v-model="sign_prev"></input>
+      </div>
+      <div class="block">
+        <div class="label">Sign:</div>
+        <input type="text" class="text" v-model="sign"></input>
+      </div>
+      <div class="block">
+        <div class="label">Token:</div>
+        <input type="text" class="text" v-model="token"></input>
       </div>
     </div>
     <script src="./js/token.js"></script>
