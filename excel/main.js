@@ -40,7 +40,7 @@ const fs = require("fs");
 const workbook = new Excel.Workbook();
 
 workbook.xlsx.readFile("前端用表格.xlsx").then(function () {
-  var worksheet = workbook.getWorksheet(2);
+  var worksheet = workbook.getWorksheet(3);
   var obj = new Object();
   obj.market = new Object();
   var detail = new Object();
