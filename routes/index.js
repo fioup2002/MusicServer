@@ -81,27 +81,6 @@ function SendResponse(type, str, res) {
   res.send(JSON.stringify(obj));
 }
 
-function GetHtml() {
-  phantom.create().then(function (ph) {
-    ph.createPage().then(function (page) {
-      page.open("https://www.gffx188.com/news?type=tips").then(function (status) {
-        page.property("content").then(function (content) {
-          const { window } = new jsdom.JSDOM(content);
-          var $ = require("jquery")(window);
-          for (var i = 0; i < $(".content-module--item--1Jgbx").length; i++) {
-            console.log($($(".content-module--item--1Jgbx")[i]).children(".content-module--itemMain--wd5XD").html());
-          }
-          page.close().then(function () {
-            ph.exit();
-          });
-        });
-      });
-    });
-  });
-}
-
-// GetHtml();
-
 // ECB pkcs5padding 128位 GTS2GWAPP1234578 0 hex gb2312
 
 function encrypt(data, key, iv) {
