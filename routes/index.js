@@ -8,8 +8,6 @@ var md5 = require("md5");
 var request = require("request");
 var path = require("path");
 
-
-
 var gHtml = "";
 router.get("/test302", function (req, res, next) {
   res.redirect("./token.html");
@@ -58,12 +56,21 @@ router.get("/GetTokenFromURL", function (req, res, next) {
   var obj = JSON.parse(req.query.value);
   var param = obj.url;
   for (var key in obj) {
-    if(key != "url"){
+    if (key != "url") {
       param += key + "=" + obj[key] + "&";
     }
   }
   console.log(param);
   request(param, function (error, response, body) {
+    res.send(body);
+  });
+});
+router.get("/api/*", (req, res, next) => {
+  var url = req.originalUrl;
+  var reg = new RegExp("/api","g");
+  url = url.replace(reg,"");
+  url = "https://myid.jt9457.com" + url;
+  request(url, function (error, response, body) {
     res.send(body);
   });
 });
