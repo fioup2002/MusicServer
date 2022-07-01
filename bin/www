@@ -80,5 +80,5 @@ function onError(error) {
 function onListening() {
   var host = server.address().address;
   var port = server.address().port;
-  console.log("http://" + host + ":" + port);
+  console.log(`http://localhost:${port}/`);
 }

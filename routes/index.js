@@ -62,6 +62,7 @@ router.get("/GetTokenFromURL", function (req, res, next) {
   }
   console.log(param);
   request(param, function (error, response, body) {
+    console.log(response)
     res.send(body);
   });
 });
