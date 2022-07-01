@@ -9,7 +9,7 @@ new Vue({
     pass: "abc123",
     passList: ["abc123", "eKu3dDCp758rt7QaH3QmIfbv9shIYh4Q"],
     url: "https://openapi.hxfx.com/tools/?",
-    urlList: ["https://openapi.hxfx.com/tools/?", "https://openapi.gffx168.com/tools/?", "https://openapi.heinto55.com:4100/tools/?","http://192.168.75.48:4101/tools/?","http://192.168.75.52:6201/cms/?"],
+    urlList: ["https://openapi.hxfx.com/tools/?", "https://openapi.gffx168.com/tools/?", "https://openapi.washingtou2022.com/tools/?","http://192.168.75.48:4101/tools/?","http://192.168.75.52:6201/cms/?"],
     sign: "",
     token: "",
   },
