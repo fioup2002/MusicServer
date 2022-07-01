@@ -59,7 +59,7 @@ module.exports = {
 function InitSetting() {
   if (fs.existsSync(CREDENTIAL_PATH)) {
     var credentials = JSON.parse(fs.readFileSync(CREDENTIAL_PATH));
-    const { client_secret, client_id, redirect_uris } = credentials.installed;
+    const { client_secret, client_id, redirect_uris } = credentials.web;
     oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
     if (fs.existsSync(TOKEN_PATH)) {
       isNeedAccess = false;
