@@ -19,7 +19,9 @@
       </div>
       <div class="block">
         <div class="label">Platform</div>
-        <input type="text" class="text" v-model="platform"></input>
+        <select class="text" v-model="platform">
+          <option :value="text" v-for="text in platformList" v-html="text"></option>
+        </select>
       </div>
       <div class="block">
         <div class="label">Type</div>

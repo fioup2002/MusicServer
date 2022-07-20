@@ -4,12 +4,13 @@ new Vue({
     textAESValue: "",
     returnAESValue: "",
     platform: "GTS2",
+    platformList: ["GTS2","MT4"],
     type: "real",
     sign_prev: "",
     pass: "abc123",
     passList: ["abc123", "eKu3dDCp758rt7QaH3QmIfbv9shIYh4Q"],
     url: "https://openapi.hxfx.com/tools/?",
-    urlList: ["https://openapi.hxfx.com/tools/?", "https://openapi.gffx168.com/tools/?", "https://openapi.washingtou2022.com/tools/?","http://192.168.75.48:4101/tools/?","http://192.168.75.52:6201/cms/?"],
+    urlList: ["https://openapi.hxfx.com/tools/?", "https://openapi.gffx168.com/tools/?", "https://openapi.washingtou2022.com/tools/?","http://192.168.75.48:4101/tools/?","http://192.168.75.52:6201/cms/?","http://openapi.s89cloud.com/tools/?"],
     sign: "",
     token: "",
   },
@@ -26,6 +27,9 @@ new Vue({
         success: (res) => {
           this.returnAESValue = res;
           this.sign_prev = this.returnAESValue + this.platform + "members.getTokenNew" + this.type + this.pass;
+          if(this.url == "http://openapi.s89cloud.com/tools/?"){
+            this.sign_prev = this.textAESValue + this.platform + "members.getTokenNew" + this.type + this.pass;
+          }
           this.SendMD5Request();
         },
       });
@@ -47,6 +51,9 @@ new Vue({
       obj.platform = this.platform;
       obj.type = this.type;
       obj.login = this.returnAESValue;
+      if(this.url == "http://openapi.s89cloud.com/tools/?"){
+        obj.login = this.textAESValue;
+      }
       obj.sign = this.sign;
       obj.url = this.url;
       $.ajax({
