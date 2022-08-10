@@ -27,9 +27,6 @@ new Vue({
         success: (res) => {
           this.returnAESValue = res;
           this.sign_prev = this.returnAESValue + this.platform + "members.getTokenNew" + this.type + this.pass;
-          if(this.url == "http://openapi.s89cloud.com/tools/?"){
-            this.sign_prev = this.textAESValue + this.platform + "members.getTokenNew" + this.type + this.pass;
-          }
           this.SendMD5Request();
         },
       });
@@ -51,9 +48,6 @@ new Vue({
       obj.platform = this.platform;
       obj.type = this.type;
       obj.login = this.returnAESValue;
-      if(this.url == "http://openapi.s89cloud.com/tools/?"){
-        obj.login = this.textAESValue;
-      }
       obj.sign = this.sign;
       obj.url = this.url;
       $.ajax({
