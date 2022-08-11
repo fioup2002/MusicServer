@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "archiver": "^5.3.1",
     "cheerio": "^1.0.0-rc.10",
     "connect-history-api-fallback": "^1.6.0",
     "cookie-parser": "~1.4.4",
@@ -21,10 +22,13 @@
     "jsdom": "^16.5.3",
     "md5": "^2.3.0",
     "morgan": "~1.9.1",
+    "node-cmd": "^5.0.0",
+    "node-zip": "^1.1.1",
     "phantom": "^6.3.0",
     "phantomjs": "^2.1.7",
     "puppeteer": "^13.5.2",
-    "webpage": "^0.3.0"
+    "webpage": "^0.3.0",
+    "zip-a-folder": "^1.1.5"
   },
   "devDependencies": {
     "http-proxy-middleware": "^2.0.6"
