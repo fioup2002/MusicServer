@@ -11,7 +11,7 @@ const upload = {
   init() {
     this.deleteFolder(dest, true);
     // 準備要上線的
-    this.addProject("S89", "www app hd");
+    this.addProject("S89", "");
     this.addProject("S86", "");
     this.addProject("N95", "");
     this.addProject("B16", "");
