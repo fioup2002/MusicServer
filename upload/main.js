@@ -13,8 +13,9 @@ const upload = {
     // 準備要上線的
     this.addProject("S89", "");
     this.addProject("S86", "");
-    this.addProject("N95", "");
-    this.addProject("B16", "");
+    this.addProject("N95", "images");
+    this.addProject("B16", "images");
+    this.addProject("B18", "");
     this.start();
   },
   start() {
@@ -27,7 +28,8 @@ const upload = {
   gitPull(project) {
     var source = `D:/htdocs/${project[0]}/master/${project[1]}.${this.table[project[0]]}`;
     // 先git pull
-    const cmdArray = ["D:", `cd: ${source}`, "git pull"];
+    const cmdArray = ["D:", `cd ${source}`, "git pull"];
+    this.cmdLine = "";
     cmdArray.forEach((cmd, i) => {
       this.cmdLine = `${this.cmdLine}${cmd}`;
       if (i < cmdArray.length - 1) {
@@ -36,8 +38,16 @@ const upload = {
     });
     const child = spawn(this.cmdLine, { shell: true });
     child.on("close", (code) => {
-      this.copyFolderRecursiveSync(source, dest);
-      this.zipFolder(project);
+      if(code == 0){
+        this.copyFolderRecursiveSync(source, dest);
+        this.zipFolder(project);
+      }
+      else{
+        console.log(project)
+      }
+    });
+    child.stderr.on('data', (data) => {
+      console.log(`stderr: ${data}`);
     });
   },
   zipFolder(project) {
