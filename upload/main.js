@@ -12,9 +12,8 @@ const upload = {
     this.deleteFolder(dest, true);
     // 準備要上線的
     this.addProject("S89", "");
-    this.addProject("S86", "");
-    this.addProject("N95", "images");
-    this.addProject("B16", "images");
+    this.addProject("N95", "");
+    this.addProject("B16", "");
     this.addProject("B18", "");
     this.start();
   },
