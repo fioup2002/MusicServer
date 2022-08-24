@@ -6,7 +6,7 @@ const dest = "D:/Users/ice.liu/Downloads/upload";
 const upload = {
   cmdLine: "",
   nowTime: new Date(),
-  table: { S89: "hxfxglobal.com", S86: "hxfx.com", S25: "ihorse100.com", N95: "hx9999.com", B16: "8bx.com", B18: "jtfx.com" },
+  table: { S89: "hxfxglobal.com", S86: "hxfx.com", S25: "ihorse100.com", N95: "hx9999.com", B16: "8bx.com", B18: "jtfx.com", S85: "bgcfd.com" },
   project: [],
   init() {
     this.deleteFolder(dest, true);
@@ -15,6 +15,7 @@ const upload = {
     this.addProject("N95", "");
     this.addProject("B16", "");
     this.addProject("B18", "");
+    this.addProject("S85", "");
     this.start();
   },
   start() {
@@ -37,15 +38,14 @@ const upload = {
     });
     const child = spawn(this.cmdLine, { shell: true });
     child.on("close", (code) => {
-      if(code == 0){
+      if (code == 0) {
         this.copyFolderRecursiveSync(source, dest);
         this.zipFolder(project);
-      }
-      else{
-        console.log(project)
+      } else {
+        console.log(project);
       }
     });
-    child.stderr.on('data', (data) => {
+    child.stderr.on("data", (data) => {
       console.log(`stderr: ${data}`);
     });
   },
