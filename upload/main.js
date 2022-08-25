@@ -16,6 +16,7 @@ const upload = {
     this.addProject("B16", "");
     this.addProject("B18", "");
     this.addProject("S85", "");
+    this.addProject("S86", "");
     this.start();
   },
   start() {
@@ -26,7 +27,7 @@ const upload = {
     }
   },
   gitPull(project) {
-    var source = `D:/htdocs/${project[0]}/master/${project[1]}.${this.table[project[0]]}`;
+    const source = this.getPath(project);
     // 先git pull
     const cmdArray = ["D:", `cd ${source}`, "git pull"];
     this.cmdLine = "";
@@ -50,7 +51,7 @@ const upload = {
     });
   },
   zipFolder(project) {
-    var source = `${dest}/${project[1]}.${this.table[project[0]]}`;
+    const source = this.getPath(project, dest);
     const archive = archiver("zip");
     const output = fs.createWriteStream(`${source}.zip`);
     archive.on("error", (err) => {
@@ -60,7 +61,7 @@ const upload = {
     archive.directory(source, false);
     archive.finalize();
     output.on("close", () => {
-      this.deleteFolder(`${dest}/${project[1]}.${this.table[project[0]]}`, false);
+      this.deleteFolder(source, false);
       this.project.splice(0, 1);
       this.start();
     });
@@ -120,6 +121,27 @@ const upload = {
         this.project.push([type, name]);
       }
     });
+  },
+  getPath(project, dest) {
+    const business = project[0];
+    const name = project[1];
+    var res = "";
+    if (dest == undefined) {
+      // 確認是不是deal的專案
+      if ((business == "S86" && name == "deal") || (business == "B16" && name == "deal")) {
+        res = `D:/htdocs/${business}/master/${name}.${business}`;
+      } else {
+        res = `D:/htdocs/${business}/master/${name}.${this.table[business]}`;
+      }
+    } else {
+      // 確認是不是deal的專案
+      if ((business == "S86" && name == "deal") || (business == "B16" && name == "deal")) {
+        res = `${dest}/${name}.${business}`;
+      } else {
+        res = `${dest}/${name}.${this.table[business]}`;
+      }
+    }
+    return res;
   },
 };
 upload.init();
