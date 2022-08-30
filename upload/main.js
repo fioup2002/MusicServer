@@ -87,7 +87,7 @@ const upload = {
   copyFileSync(source, target) {
     var lastModifyTime = fs.statSync(source).mtime;
     var reg = new RegExp(".php");
-    if (this.nowTime - lastModifyTime <= 60 * 60 * 24 * 15 * 1000 && source.match(reg) == null) {
+    if (this.nowTime - lastModifyTime <= 60 * 60 * 24 * 7 * 1000 && source.match(reg) == null) {
       this.createFolder(target);
       var targetFile = target;
       if (fs.existsSync(target)) {
